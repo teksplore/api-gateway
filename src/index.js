@@ -47,8 +47,8 @@ const authenticationToken = (req, res, next) => {
 
 // API Gateway Routing
 app.use("/api/auth", createProxyMiddleware({ target: SERVICES.auth, changeOrigin: true }));
-app.use("/api/taska", createProxyMiddleware({ target: SERVICES.tasks, changeOrigin: true }));
-app.use("/api/billing", createProxyMiddleware({ target: SERVICES.billing, changeOrigin: true }));
+app.use("/api/taska", authenticationToken, createProxyMiddleware({ target: SERVICES.tasks, changeOrigin: true }));
+app.use("/api/billing", authenticationToken, createProxyMiddleware({ target: SERVICES.billing, changeOrigin: true }));
 
 // Example route
 app.get("/", (req, res) => {
