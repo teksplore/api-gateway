@@ -44,6 +44,12 @@ const authenticationToken = (req, res, next) => {
     });
 };
 
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ message: "Internal server error" });
+})
+
 
 // API Gateway Routing
 app.use("/api/auth", createProxyMiddleware({ target: SERVICES.auth, changeOrigin: true }));
