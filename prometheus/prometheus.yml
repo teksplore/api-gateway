@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 15s # Scrape metrics every 15 seconds
+
+scrape_configs:
+  - job_name: "api-gateway"
+    static_configs:
+      - targets: ["localhost:3000"]  # API Gateway metrics endpoint
+
+rule_files:
+  - alert.rules.yml # Include custom alerting rules

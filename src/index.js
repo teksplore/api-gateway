@@ -67,6 +67,9 @@ const authenticateToken = (req, res, next) => {
 app.use((req, res, next) => {
   res.on("finish", () => {
     httpRequestCounter.inc({ method: req.method, route: req.path, status: res.statusCode });
+    if(res.statusCode >= 400) {
+        httpErrorCounter.inc({ method: req.method, route: req.path, status: res.statusCode });
+    }
   });
   next();
 });
@@ -89,6 +92,7 @@ app.use((err, req, res, next) => {
     if (error) console.error("Error logging to file:", error);
   });
   console.error(err.stack);
+  httpErrorCounter.inc({ method: req.method, route: req.path, status: res.statusCode || 500 });
   res.status(500).json({ message: "Internal Server Error" });
 });
 

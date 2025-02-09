@@ -1,0 +1,11 @@
+groups:
+  - name: api_gateway_alerts
+    rules:
+      - alert: HighErrorRate
+        expr: http_errors_total > 50
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High error rate detected in API Gateway"
+          description: "More than 50 errors in the last 5 minutes."
